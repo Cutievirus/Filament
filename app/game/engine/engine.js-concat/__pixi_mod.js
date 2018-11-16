@@ -1,0 +1,10 @@
+PIXI.DisplayObject.prototype.enabled=true;
+PIXI.DisplayObject.prototype.enable=function(){
+	this.enabled=true;
+	this.visible=true;
+};
+PIXI.DisplayObject.prototype.disable=function(){
+	this.enabled=false;
+	this.visible=false;
+};
+PIXI.DisplayObject.prototype.update=function(){};

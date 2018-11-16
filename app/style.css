@@ -1,0 +1,80 @@
+html,body,#wrapper{
+	height: 100%;
+}
+body{
+	margin:0;
+}
+
+#wrapper{
+	display: flex;
+	flex-flow: column;
+}
+#content{
+	display: flex;
+	flex-grow: 1;
+	overflow: hidden;
+}
+#main{
+	flex-grow: 1;
+	background-color: black;
+	color:white;
+	overflow: hidden;
+	position: relative;
+}
+.nav-screen{
+	height: 100%;
+	overflow-x: hidden;
+	overflow-y: auto;
+}
+#screen-game{
+	overflow: hidden
+}
+#screen-game canvas{
+	display: block;
+	margin: auto;
+}
+@supports (transform: translate(-50%, -50%)) {
+	canvas{
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+	}
+}
+#pixi-canvas{
+	z-index: 2;
+}
+#hybrid-canvas{
+	z-index: 1;
+	image-rendering: auto;
+}
+#ui-container{
+	position: absolute;
+	z-index: 3;
+	pointer-events: none;
+}
+
+button::-moz-focus-inner {
+  border: 0;
+}
+button{
+	background: #a7d2ff;
+	border: 0;
+	font-size: 1em;
+	transition: background-color 0.25s, color 0.25s;
+}
+button:hover{
+	background-color: #beddff; 
+}
+nav button{
+	line-height: 2em;
+	background-color: transparent;
+	font-weight: bold;
+}
+nav button:hover{
+	background-color: #beddff;
+}
+nav button.active{
+	background: #007dff;
+	color: white;
+}
