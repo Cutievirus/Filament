@@ -1,0 +1,46 @@
+
+#ui-container
+	font-size: "calc(%s*var(--uiRes))"%$ui-fontsize
+	font-family: "Trebuchet MS", sans-serif
+	color: white
+	text-shadow: uipx(1) uipx(1) uipx(0.5) rgba(0,0,0,0.5)
+	
+	.window[data-frame=true]
+		.content
+			border: uipx(3) ridge lightgray
+			border-radius: uipx(2)
+			background-image: linear-gradient(#555d, #333d)
+			padding: uipx(2) uipx(3)
+			box-sizing: border-box
+			box-shadow: 0 0 0 uipx(0.1) black
+		.handle
+			box-sizing: border-box
+			background-color: lightgray
+			border-radius: uipx(2) uipx(2) 0 0
+			border-right: uipx(3) ridge lightgray
+			border-left: uipx(3) solid lightgray
+			box-shadow: 0 uipx(4) 0 uipx(-3) gray
+			height:1em
+			&:before
+				content: attr(data-title)
+				font-size: 80%
+				position: absolute
+				text-shadow: none
+				color: gray
+		.closeButton
+			right: uipx(3)
+			line-height: 0.9em
+			width: @line-height
+			height: @line-height
+			margin: 1em - @line-height
+			text-align: center
+			border-radius: uipx(1)
+			&:hover
+				background-color: #d22
+				color:white
+	.window[data-movable=true]
+		.content
+			padding-top: 1em
+		.closeButton
+			text-shadow:none
+			color:gray

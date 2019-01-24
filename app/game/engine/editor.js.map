@@ -1,9 +1,0 @@
-{
-  "version": 3,
-  "file": "editor.js",
-  "sources": [
-    "app/game/engine/editor.js-concat/tilesets.js"
-  ],
-  "names": [],
-  "mappings": "AAAA;AACA;AACA"
-}

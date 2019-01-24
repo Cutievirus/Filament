@@ -1,0 +1,8 @@
+{
+    "width":320,
+    "height":240,
+    "initialScale":3,
+    "tileSize": 16,
+    "cellSize": 24,
+    "uiRes":2
+}

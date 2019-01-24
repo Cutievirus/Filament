@@ -1,0 +1,120 @@
+<!doctype html>
+<html>
+<head>
+	<title>Filament</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+	body{
+		font-family: sans-serif;
+		overflow: hidden;
+		user-select: none;
+	}
+	h2{
+		margin: 0 0 0.5em;
+		font-size: 100%;
+	}
+	.column{
+		display: flex;
+		flex-direction:column;
+	}
+	.row{
+		display: flex;
+		flex-direction:row;
+	}
+	input[type=text],select{
+		flex-grow:1;
+	}
+	input,select,label{
+		margin: 0.5rem 1rem;
+		max-width: 60%;
+	}
+	hr{
+		width: 100%;
+	}
+</style>
+</head>
+<body>
+	<div class="column">
+		<h2>New Project</h2>
+		<form action="javascript:void(0);" onsubmit="newProject(this);" class="column">
+			<div class="row">
+				<input type="text" name="project" value="game">
+				<input type="submit" value="New Project">
+			</div>
+		</form>
+		<hr>
+		<h2>Open Project</h2>
+		<form action="javascript:void(0);" onsubmit="openProject(this);" class="column">
+			<div class="row">
+				<select name="project" id="project_select">
+					<option value="">-</option>
+				</select>
+				<input type="submit" value="Open Project">
+			</div>
+			<label>
+				<input type="checkbox" name="devmode" checked>
+				Development Mode
+			</label>
+		</form>
+	</div>
+<script>
+	const { remote, ipcRenderer:ipc } = require('electron');
+	const mainProcess = remote.require('./main.js');
+	const win = remote.getCurrentWindow();
+	const {dialog} = remote;
+	async function newProject(sender){
+		const values=processForm(sender);
+		const name = await mainProcess.newProject(values.project);
+		if(name){
+			localStorage.setItem("lastProject",name);
+		}
+	}
+	async function openProject(sender){
+		const values=processForm(sender);
+		const name = await mainProcess.openProject(values.project,values.devmode);
+		if(name){
+			localStorage.setItem("lastProject",name);
+		}
+	} 
+	function processForm(form){
+		const values={};
+		const fields=form.querySelectorAll("input, select, textarea");
+		for (const field of fields){
+			if(!field.name){continue;}
+			switch(field.type){
+			case "checkbox":
+				values[field.name]=field.checked;
+				continue;
+			default:
+				values[field.name]=field.value;
+				continue;
+			}
+		}
+		return values;
+	}
+	const project_select=document.getElementById('project_select');
+	function addProjectOption(name){
+		const option = document.createElement('option');
+		option.value=name;
+		option.append(name);
+		project_select.append(option);
+	}
+	ipc.on("reload",async()=>{
+		while(project_select.children[1]){project_select.removeChild(project_select.children[1]);}
+		if(!mainProcess.settings.production){
+			addProjectOption("<default>");
+		}
+		projects = await mainProcess.getProjectList();
+		for (const name of projects){
+			addProjectOption(name);
+		}
+		lastProject = localStorage.getItem("lastProject");
+		if(lastProject){
+			project_select.value=lastProject;
+		}
+	});
+	ipc.emit("reload");
+</script>
+</body>
+</html>
