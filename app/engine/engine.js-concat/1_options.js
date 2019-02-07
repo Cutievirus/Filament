@@ -9,9 +9,6 @@ Filament.Enum = class Enum{
 Filament.SCALE_MODE = new Filament.Enum(
 	"NORMAL","NEAREST","HYBRID"
 );
-Filament.INDENT_MODE =  new Filament.Enum(
-	"TAB","SPACE"
-);
 
 Filament.settings = {
 	width: 320,
@@ -21,8 +18,6 @@ Filament.settings = {
 	scaleMode: Filament.SCALE_MODE.HYBRID,
 	maintainAspectRatio: true,
 	uiRes:1,
-	tabSize:4,
-	indentMode:Filament.INDENT_MODE.TAB,
 };
 
 Filament.configure=options=>{
@@ -33,3 +28,9 @@ Filament.loadSettings=async function(){
 	const settings = await (await fetch("game/settings.json")).json();
 	Filament.configure(settings);
 };
+
+Object.defineProperties(Filament,{
+	pixiScaleMode:{
+		get:()=>Filament.settings.scaleMode===Filament.SCALE_MODE.NORMAL ? PIXI.SCALE_MODES.LINEAR : PIXI.SCALE_MODES.NEAREST
+	}
+});

@@ -87,7 +87,7 @@ Filament.Window = class extends Filament.UI{
 			"--height"	:	bounds.height,
 			"--x"		:	bounds.left,
 			"--y"		:	bounds.top,
-			"--z"		:	this.z+windex/1000,
+			"--z"		:	this.zIndex+windex/1000,
 			"--alpha"	:	this.worldAlpha,
 		});
 		this.setAttributes({

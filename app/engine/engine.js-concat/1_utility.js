@@ -109,3 +109,74 @@ Filament.mountElement=function(target){
 	target.append(this);
 	return this;
 };
+
+{
+	const handler = {construct(){return handler;}};
+	Filament.isConstructor=f=>{
+		try{
+			return Boolean(new (new Proxy(f,handler)));
+		}catch(err){
+			return false;
+		}
+	}
+}
+
+Filament.CoordMap = class{
+	constructor(dimensions=2,dfault=null,...defaultArgs){
+		this.dimensions=dimensions;
+		this.dfault=dfault;
+		this.defaultArgs=defaultArgs;
+		this.data={};
+	}
+	get(x,...yz){
+		if(this.dimensions<=1){
+			return this._getValue(x);
+		}
+		return this._getSubDimension(x).get(...yz);
+	}
+	_getValue(x){
+		if(x in this.data){
+			return this.data[x];
+		}
+		if(typeof this.dfault==='function'){
+			if(Filament.isConstructor(this.dfault)){
+				return new this.dfault(...this.defaultArgs);
+			}else{
+				return this.dfault(...this.defaultArgs);
+			}
+		}else{
+			return this.dfault;
+		}
+	}
+	_getSubDimension(x){
+		if( !(this.data[x] instanceof Filament.CoordMap) ){
+			this.data[x]=new Filament.CoordMap(this.dimensions-1,this.dfault,...this.defaultArgs);
+		}
+		return this.data[x];
+	}
+	set(x,...yz){
+		if(this.dimensions<=1){
+			this.data[x]=yz[0];
+			return;
+		}
+		this._getSubDimension(x).set(...yz);
+	}
+	unset(x,...yz){
+		if(this.dimensions<=1){
+			delete this.data[x];
+			return;
+		}
+		const subdimension = this._getSubDimension(x);
+		subdimension.unset(...yz);
+		if(Object.keys(subdimension.data).length===0){
+			delete this.data[x];
+		}
+	}
+	has(x,...yz){
+		if(this.dimensions<=1){
+			return x in this.data;
+		}
+		if( !(x in this.data) ){ return false;}
+		return this._getSubDimension(x).has(...yz);
+	}
+}

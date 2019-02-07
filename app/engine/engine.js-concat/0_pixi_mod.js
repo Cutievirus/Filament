@@ -9,9 +9,9 @@ PIXI.DisplayObject.prototype.disable=function(){
 };
 PIXI.DisplayObject.prototype.update=function(delta){};
 
-PIXI.DisplayObject.prototype.z=0;
+PIXI.DisplayObject.prototype.zIndex=0;
 PIXI.Container.prototype.update=function(delta){
-	this.children.sort((a,b)=>a.z-b.z);
+	this.children.sort((a,b)=>a.zIndex-b.zIndex);
 	for(const child of this.children){
 		child.update(delta);
 	}

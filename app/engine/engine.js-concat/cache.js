@@ -6,7 +6,7 @@ Filament.Cache=class{
 	async requestImage(key){
 		key=`assets/img/${key}`;
 		return await this.requestAsset(key,Filament.gameFile(key),(resource)=>{
-			resource.texture.baseTexture.scaleMode=Filament.settings.scaleMode===Filament.SCALE_MODE.NORMAL ? PIXI.SCALE_MODES.LINEAR : PIXI.SCALE_MODES.NEAREST;
+			resource.texture.baseTexture.scaleMode=Filament.pixiScaleMode;
 			return resource.texture;
 		});
 	}
