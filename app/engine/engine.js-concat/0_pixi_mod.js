@@ -30,3 +30,12 @@ Object.defineProperty(PIXI.DisplayObject.prototype,'scene',{
 		scene.addChild(this);
 	}
 });
+
+PIXI.Texture.prototype.crop=function(x,y,w,h){
+	const rect = arguments.length===1?x:new PIXI.Rectangle(x,y,w,h);
+	return new PIXI.Texture(this.baseTexture,rect);
+}
+
+PIXI.Sprite.prototype.crop=function(){
+	this.texture = this.texture.crop(...arguments);
+}

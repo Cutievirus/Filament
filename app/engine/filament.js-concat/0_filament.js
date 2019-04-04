@@ -24,7 +24,15 @@ Filament.loadStyle=source=>{
 	document.head.append(stylesheet);
 }
 
-Filament.gameFile=filename=>`${Filament.gameDir}${Filament.gameDir[Filament.gameDir.length-1]==='/'?'':'/'}${filename}`;
+Filament.path=(...parts)=>{
+	let path='';
+	while(parts.length){
+		if(!parts[0]){ parts.shift();continue; }
+		path+=`${!path||path[path.length-1]==='/'?'':'/'}${parts.shift()}`;
+	}
+	return path;
+};
+Filament.gameFile=filename=>Filament.path(Filament.gameDir,filename);
 
 Filament.loadGame=()=>{
 	const scripts = ["engine/engine.js"];
@@ -43,7 +51,7 @@ try{
 		remote:remote,
 		ipc:ipc,
 		mainProcess:remote.require('./main.js'),
-		window=remote.getCurrentWindow(),
-		dialog=remote.dialog
+		window:remote.getCurrentWindow(),
+		dialog:remote.dialog
 	}
 }catch(err){}

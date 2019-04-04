@@ -18,6 +18,7 @@ Filament.settings = {
 	scaleMode: Filament.SCALE_MODE.HYBRID,
 	maintainAspectRatio: true,
 	uiRes:1,
+	language:'en',
 };
 
 Filament.configure=options=>{
@@ -25,7 +26,7 @@ Filament.configure=options=>{
 };
 
 Filament.loadSettings=async function(){
-	const settings = await (await fetch("game/settings.json")).json();
+	const settings = await (await fetch(Filament.gameFile('settings.json'))).json();
 	Filament.configure(settings);
 };
 

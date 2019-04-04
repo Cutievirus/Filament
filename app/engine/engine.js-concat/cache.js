@@ -3,15 +3,28 @@ Filament.Cache=class{
 		this._cache={};
 	}
 
-	async requestImage(key){
-		key=`assets/img/${key}`;
-		return await this.requestAsset(key,Filament.gameFile(key),(resource)=>{
+	async requestImage(key,path='assets/images'){
+		return await this.gameAsset(key,path,(resource)=>{
 			resource.texture.baseTexture.scaleMode=Filament.pixiScaleMode;
 			return resource.texture;
 		});
 	}
 	async requestAudio(key){
 		
+	}
+	async requestJSON(key,path='data'){
+		return await this.gameAsset(key,path,(resource)=>{
+			return resource.data;
+		})
+	}
+	async requestTileset(id){
+		const data = await requestJSON(`tilesets/${id}.json`);
+		const image = await requestImage(data.image,'assets/tilesets');
+		return new Filament.TileSet(image,data);
+	}
+	async gameAsset(key,path,callback){
+		path=Filament.path(path,key);
+		return await this.requestAsset(path,Filament.gameFile(path),callback);
 	}
 	requestAsset(key,url,callback){
 		return new Promise((resolve,reject)=>{
