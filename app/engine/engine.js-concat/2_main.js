@@ -89,9 +89,10 @@ Filament.resize=()=>{
 		Filament.hybridCanvas.style.height = Filament.pixiCanvas.style.height;
 		Filament.hybridContext.imageSmoothingEnabled=false;
 	}
-	Filament.ui_container.style.transform="scale("+scale/Filament.settings.uiRes+")";
-	Filament.ui_container.style.left=
-		Filament.parent.offsetWidth/2 - Filament.ui_container.offsetWidth/2+"px";
-	Filament.ui_container.style.top=
-		Filament.parent.offsetHeight/2 - Filament.ui_container.offsetHeight/2+"px";
+	Filament.ui_container.style.setProperty('--scale',
+		scale/Filament.settings.uiRes);
+	Filament.ui_container.style.setProperty('--left',
+		Filament.parent.offsetWidth/2 - Filament.ui_container.offsetWidth/2);
+	Filament.ui_container.style.setProperty('--top',
+		Filament.parent.offsetHeight/2 - Filament.ui_container.offsetHeight/2);
 };

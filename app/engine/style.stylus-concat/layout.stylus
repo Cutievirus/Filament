@@ -42,6 +42,11 @@ body
 	z-index: 3
 	pointer-events: none
 
+	transform: scale(var(--scale))
+	-webkit-transform: perspective(999px) translateZ(1px) scale(var(--scale))
+	top: calc(var(--top)*1px)
+	left: calc(var(--left)*1px)
+
 	.window
 		position: absolute
 		left: calc(var(--x)*1px*var(--uiRes))
@@ -49,10 +54,15 @@ body
 		z-index: var(--z)
 		width: calc(var(--width)*1px*var(--uiRes))
 		height: calc(var(--height)*1px*var(--uiRes))
+		//transform: perspective(999px) translateZ(1px)
 		.content
 			position:absolute
 			left:0; top:0
 			width:100%; height:100%
+			&::selection
+				background: #fe57a1
+				color: #fff
+				text-shadow: none
 
 		.handle
 			display:none

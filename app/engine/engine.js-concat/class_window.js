@@ -27,6 +27,7 @@ Filament.Window = class extends Filament.UI{
 		});
 		this.handle.addEventListener('mouseup',event=>{
 			this.dragging=false;
+			this.finishDrag(event);
 		});
 		this.contentObserver=new MutationObserver(()=>{
 			if(this.resizable){
@@ -68,14 +69,14 @@ Filament.Window = class extends Filament.UI{
 		bounds.height = Filament.round(this.height,2);
 		bounds.left=Filament.round(this.worldTransform.tx-this.anchor.x*bounds.width,2);
 		bounds.top=Filament.round(this.worldTransform.ty-this.anchor.y*bounds.height,2);
+		if(this.edgeSnap){
+			bounds.left=Filament.minmax(0,Filament.settings.width-bounds.width,bounds.left);
+			bounds.top=Filament.minmax(0,Filament.settings.height-bounds.height,bounds.top);
+		}
 		return bounds;
 	}
 	updateUI(delta){
 		super.updateUI(delta);
-		if(this.edgeSnap){
-			this.x=Filament.minmax(0,Filament.settings.width-this.width,this.x);
-			this.y=Filament.minmax(0,Filament.settings.height-this.height,this.y);
-		}
 		if(this.resizable){
 			this.width=Filament.minmax(this.minwidth,this.maxwidth,this.width);
 			this.height=Filament.minmax(this.minheight,this.maxheight,this.height);
@@ -102,6 +103,12 @@ Filament.Window = class extends Filament.UI{
 		this.x+=event.movementX/Filament.scale;
 		this.y+=event.movementY/Filament.scale;
 	}
+	finishDrag(event){
+		if(this.edgeSnap){
+			this.x=Filament.minmax(0,Filament.settings.width-this.width,this.x);
+			this.y=Filament.minmax(0,Filament.settings.height-this.height,this.y);
+		}
+	}
 	updateResize(event){
 		this.width=Math.min(Filament.settings.width-this.x, this.width+event.movementX/Filament.scale);
 		this.height=Math.min(Filament.settings.height-this.y, this.height+event.movementY/Filament.scale);
@@ -120,5 +127,6 @@ window.addEventListener('mouseup',event=>{
 	if(!Filament.scene){ return; }
 	for (const win of Filament.scene.windows){
 		win.dragging=false;
+		win.finishDrag();
 	}
 });
