@@ -41,6 +41,16 @@
 	.window[data-movable=true]
 		.content
 			padding-top: 1em
+			&::selection
+				background: #fe57a1
+				color: #fff
+				text-shadow: none
 		.closeButton
 			text-shadow:none
 			color:gray
+		a
+			text-decoration: none
+			color:#fe57a1
+	.tileSelector
+		outline: 2px ridge white
+		

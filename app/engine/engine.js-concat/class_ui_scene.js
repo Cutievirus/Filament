@@ -8,14 +8,15 @@ Object.defineProperty(Filament,"scene",{
 			Filament.activeScene=value;
 		}else{
 			for (const key in Filament.scenes){
-				if(value===game.scenes[key]){
+				if(value===Filament.scenes[key]){
 					Filament.activeScene=key;
 					break;
 				}
 			}
 		}
 		if(Filament.activeScene===oldScene){ return; }
-		for (const scene of Filament.scenes){
+		for (const key in Filament.scenes){
+			const scene = Filament.scenes[key];
 			if(Filament.activeScene===scene.name){
 				scene.enable();
 				scene.enter();
@@ -39,6 +40,15 @@ Filament.Scene = class extends Filament.UI{
 		this.classList.add("scene");
 		this.name=name;
 		this.windows=[];
+		this.setAttribute('data-visible',false);
+	}
+	enable(){
+		super.enable();
+		this.setAttribute('data-visible',true);
+	}
+	disable(){
+		super.disable();
+		this.setAttribute('data-visible',false);
 	}
 	updateUI(delta){
 		super.updateUI(delta);

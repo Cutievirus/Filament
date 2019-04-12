@@ -28,6 +28,12 @@ Filament.configure=options=>{
 Filament.loadSettings=async function(){
 	const settings = await (await fetch(Filament.gameFile('settings.json'))).json();
 	Filament.configure(settings);
+
+	const body = document.body.style;
+	body.setProperty('--uiRes',Filament.settings.uiRes);
+	body.setProperty('--screen-width',Filament.settings.width);
+	body.setProperty('--screen-height',Filament.settings.height);
+	body.setProperty('--tileSize',Filament.settings.tileSize);
 };
 
 Object.defineProperties(Filament,{

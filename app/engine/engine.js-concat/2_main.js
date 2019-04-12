@@ -18,9 +18,6 @@ Filament.start=async function(){
 		Filament.pixiCanvas.parentElement.appendChild(Filament.hybridCanvas);
 		Filament.pixiCanvas.style.opacity=0;
 	}
-	document.body.style.setProperty('--uiRes',Filament.settings.uiRes);
-	document.body.style.setProperty('--screen-width',Filament.settings.width);
-	document.body.style.setProperty('--screen-height',Filament.settings.height);
 
 	Filament.ui_container.style.width = Filament.settings.width*Filament.settings.uiRes+"px";
 	Filament.ui_container.style.height = Filament.settings.height*Filament.settings.uiRes+"px";

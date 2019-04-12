@@ -11,10 +11,11 @@ Filament.MixinEvents={
 	fireEvent(eventname,event={}){
 		const eventlist=this.getEventList(eventname,false);
 		if(!eventlist){ return; }
-		for (const callback in eventlist){
-			event.remove=Filament.EventInterface.removeEvent.bind(this,eventname,callback);
+		for (const callback of eventlist){
+			event.remove=Filament.MixinEvents.removeEvent.bind(this,eventname,callback);
 			if(typeof callback === 'function'){ callback(event); }
 		}
+		
 	},
 	addEvent(eventname,callback){
 		return Filament.arrayAdd(this.getEventList(eventname,true),callback);

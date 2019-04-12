@@ -63,7 +63,7 @@ Filament.untag=(s,...v)=>{
 }
 
 Filament.html=(...args)=>{
-	const string = untag(...args);
+	const string = Filament.untag(...args);
 	const div = document.createElement('div');
 	div.innerHTML=string;
 	return new Filament.NodeList(...div.childNodes);

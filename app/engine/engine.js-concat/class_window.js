@@ -20,6 +20,7 @@ Filament.Window = class extends Filament.UI{
 		this.closeButton.addEventListener('click',event=>{
 			this.destroy();
 		});
+		this.teletype=0;
 		this.handle.addEventListener('mousedown',event=>{
 			Filament.arrayRemove(this.scene.windows,this);
 			Filament.arrayAdd(this.scene.windows,this);
@@ -113,6 +114,11 @@ Filament.Window = class extends Filament.UI{
 		this.width=Math.min(Filament.settings.width-this.x, this.width+event.movementX/Filament.scale);
 		this.height=Math.min(Filament.settings.height-this.y, this.height+event.movementY/Filament.scale);
 		this.resizing=false;
+	}
+
+	get text(){ return this.content.innerHTML; }
+	set text(value){
+
 	}
 }
 

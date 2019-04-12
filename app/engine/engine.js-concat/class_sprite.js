@@ -6,8 +6,4 @@ Filament.Sprite = class extends PIXI.Sprite{
 	async loadTexture(key){
 		this.texture=await Filament.cache.requestImage(key);
 	}
-	mount(parent){
-		parent.addChild(this);
-		return this;
-	}
 }

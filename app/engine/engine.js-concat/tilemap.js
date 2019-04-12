@@ -125,6 +125,7 @@ Filament.TileMap = class extends PIXI.Container{
 		this.fringeLayer = new PIXI.Container();
 		this.cells = new Filament.CoordMap(2);
 		// TODO: read map settings from JSON.
+		this.selector = new Filament.TileSelector().mount(this);
 		this.settings={
 			name:'',
 			cellSize:null,
@@ -132,6 +133,10 @@ Filament.TileMap = class extends PIXI.Container{
 	}
 	get cellSize(){
 		return this.settings.cellSize?this.settings.cellSize:Filament.settings.cellSize;
+	}
+	mount(){
+		super.mount(...arguments);
+		this.selector.mountUI(this.scene);
 	}
 }
 
@@ -153,3 +158,10 @@ When player can step onto overpass tile, their elevation is set to same as the o
 When player can't step onto the overpass tile, they instead step under it.
 
 */
+
+Filament.TileSelector = class extends Filament.UI{
+	constructor(){
+		super();
+		this.classList.add('tileSelector');
+	}
+}

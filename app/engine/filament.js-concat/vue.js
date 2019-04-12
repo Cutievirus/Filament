@@ -24,7 +24,7 @@ Filament.editorScreen=(name,component)=>{
 };
 
 Filament.editorScreen("Map",{
-	template:`<div id="screen-game">
+	template:`<div id="screen-game" tabindex="0">
 		<canvas id="pixi-canvas"></canvas>
 		<div id="ui-container"></div>
 	</div>`,
