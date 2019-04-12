@@ -36,8 +36,20 @@ Filament.arrayRemove=(array,obj)=>{
 	return false;
 }
 
+/**
+ * Like Object.assign, except doesn't overwrite fields
+ * that already exist.
+ */ 
+Filament.assign=(target,...mixins)=>{
+	for (const mixin of mixins) for (const field in mixin){
+		if(!(field in target)){
+			target[field] = mixin[field];
+		}
+	}
+}
+
 Filament.mixin_object=(target,mixin)=>{
-	Object.assign(target,mixin);
+	Filament.assign(target,mixin);
 	if(typeof mixin.implement === 'function'){ mixin.implement.call(target); }
 }
 
@@ -45,7 +57,7 @@ Filament.mixin=(target,mixin)=>{
 	if (!(target instanceof Function)){ return Filament.mixin_object(target,mixin); }
 	if(!target._mixins){ target._mixins=[] }
 	target._mixins.push(mixin);
-	Object.assign(target.prototype,mixin);
+	Filament.assign(target.prototype,mixin);
 	target.prototype.implement=Filament.implement.bind(this);
 }
 Filament.implement=function(instance,clazz){

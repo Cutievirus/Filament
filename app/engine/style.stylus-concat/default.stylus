@@ -52,5 +52,5 @@
 			text-decoration: none
 			color:#fe57a1
 	.tileSelector
-		outline: 2px ridge white
+		outline: 3px ridge white
 		

@@ -1,15 +1,12 @@
 Filament.keyboard={
 	keys:{},
-	keyEventHandler(eventname,event){
+	eventHandler(eventname,event){
 		const key = this.getKey(event.code,false);
 		if(!key){ return; }
 		if(typeof key[eventname] === 'function')key[eventname]();
 		for (const keygroup of key.keygroups){
 			keygroup.fireEvent(eventname,event);
 		}
-	},
-	addEventHandler(keyname){
-		this[`${keyname}Handler`]=this.keyEventHandler.bind(this,keyname);
 	},
 	getKey(keyname,create){
 		if(!(keyname in this.keys) && create){
@@ -18,11 +15,9 @@ Filament.keyboard={
 		return this.keys[keyname];
 	}
 };
+Filament.mixin_object(Filament.keyboard,Filament.MixinEventHandler);
 Filament.keyboard.addEventHandler('keydown');
 Filament.keyboard.addEventHandler('keyup');
-
-Filament.parent.addEventListener('keydown',Filament.keyboard.keydownHandler);
-Filament.parent.addEventListener('keyup',Filament.keyboard.keyupHandler);
 
 Filament.Key = class{
 	constructor(name){
