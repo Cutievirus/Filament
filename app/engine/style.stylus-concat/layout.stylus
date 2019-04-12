@@ -75,9 +75,6 @@ body
 			right:0
 			-moz-user-select:-moz-none
 			user-select:none
-	.tileSelector
-		width: calc(var(--tileSize)*1px)
-		height: @width
 
 	[data-interactive=true]
 		pointer-events: all

@@ -159,9 +159,23 @@ When player can't step onto the overpass tile, they instead step under it.
 
 */
 
-Filament.TileSelector = class extends Filament.UI{
+Filament.TileSelector = class extends Filament.Window{
 	constructor(){
 		super();
 		this.classList.add('tileSelector');
+		this.minwidth=0;
+		this.minheight=0;
+		this.width=Filament.settings.tileSize;
+		this.height=Filament.settings.tileSize;
+		this.edgeSnap=true;
+		Filament.mouse.addEvent('mousemove',this.mouseMove.bind(this));
+	}
+
+	mouseMove(event){
+		if(!this.scene){
+			event.remove();
+		}
+		this.x=Filament.floorFactor(event.canvasX,Filament.settings.tileSize);
+		this.y=Filament.floorFactor(event.canvasY,Filament.settings.tileSize);
 	}
 }

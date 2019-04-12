@@ -21,6 +21,10 @@ Filament.round=(value,places=0,func='round')=>{
 Filament.floor=(value,places)=>Filament.round(value,places,'floor');
 Filament.ceil=(value,places)=>Filament.round(value,places,'ceil');
 
+Filament.roundFactor=(value,factor=1,func='round')=>Math[func](value/factor)*factor;
+Filament.floorFactor=(value,factor)=>Filament.roundFactor(value,factor,'floor');
+Filament.ceilFactor=(value,factor)=>Filament.roundFactor(value,factor,'ceil');
+
 Filament.arrayAdd=(array,obj,index=array.length)=>{
 	if(array.indexOf(obj)>=0){ return true; }
 	array.splice(index,0,obj);

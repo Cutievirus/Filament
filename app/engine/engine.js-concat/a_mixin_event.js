@@ -32,7 +32,6 @@ Filament.MixinEventHandler={
 		if(typeof this.fireEvent==='function'){
 			this.fireEvent(eventname,event);
 		}
-
 	},
 	addEventHandler(eventname,addListener=true){
 		const handler = `${eventname}Handler`;
