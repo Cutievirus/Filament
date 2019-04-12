@@ -7,6 +7,7 @@ Filament.vue = new Vue({
 	data:{
 		activeScreen:null,
 		screens:[],
+		editor:false,
 	}
 });
 

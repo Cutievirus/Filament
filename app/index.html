@@ -12,7 +12,7 @@
 <body>
 <div id="wrapper">
 	<header>
-		<nav>
+		<nav v-if="editor">
 			<button
 			v-for="screen in screens"
 			@click="activeScreen=screen"
@@ -29,7 +29,9 @@
 			:is="screen.component"
 			></div>
 		</main>
-		<aside id="tiles">tiles</aside>
+		<aside id="tiles"
+		v-if="editor"
+		>tiles</aside>
 	</section>
 </div>
 <script src="engine/filament.js"></script>

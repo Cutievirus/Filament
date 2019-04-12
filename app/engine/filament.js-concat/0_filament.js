@@ -37,6 +37,7 @@ Filament.gameFile=filename=>Filament.path(Filament.gameDir,filename);
 Filament.loadGame=()=>{
 	const scripts = ["engine/engine.js"];
 	if(Filament.electron){
+		Filament.vue.$data.editor=true;
 		scripts.push("engine/editor.js");
 	}
 	scripts.push(Filament.gameFile("game.js"));
