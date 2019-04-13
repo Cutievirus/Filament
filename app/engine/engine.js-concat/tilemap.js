@@ -64,7 +64,7 @@ Filament.MapCell = class{
 		if(tilesetId !== this.lastTileset){ this.lastTileset = tilesetId; }
 		const tileX=tileData.x;
 		const tileY=tileData.y;
-		const tileset=Filament.cache.requestTileset(tileId);
+		const tileset=Filament.cache.requestTileset(tilesetId);
 		// get tile layer data so we know how to draw it.
 		const layerType = tileset.getTile(tileX,tileY).layer;
 		switch(layerType){

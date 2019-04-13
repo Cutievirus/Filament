@@ -1,5 +1,6 @@
 body
 	font-size: $ed-fontsize
+	image-rendering: pixelated;
 button
 	background: #a7d2ff;
 	border: 0;
@@ -19,3 +20,9 @@ button
 		.active
 			background: #007dff
 			color: white
+
+
+#tileset-panel
+	background-color:black
+	img
+		width: calc(var(--width)*var(--scale)*1px)

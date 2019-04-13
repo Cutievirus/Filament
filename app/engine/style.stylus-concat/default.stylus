@@ -52,5 +52,14 @@
 			text-decoration: none
 			color:#fe57a1
 	.tileSelector
-		outline: 3px ridge white
-		
+		border-size=uipx(2)
+		border: border-size ridge white
+		margin-left: - border-size
+		margin-top: @margin-left
+		animation: 0.25s linear alternate infinite tileSelector-pulse
+		border-radius: uipx(2)
+	@keyframes tileSelector-pulse
+		from
+			transform: scale(1)
+		to
+			transform: scale(1.05)

@@ -76,7 +76,8 @@ Filament.resize=()=>{
 	Filament.scaleX=scaleX;
 	Filament.scaleY=scaleY;
 	Filament.scale=scale;
-	
+	document.body.style.setProperty('--scale',scale);
+
 	Filament.pixiCanvas.style.width = Filament.settings.width*scaleX+"px";
 	Filament.pixiCanvas.style.height = Filament.settings.height*scaleY+"px";
 	if(Filament.hybridCanvas){

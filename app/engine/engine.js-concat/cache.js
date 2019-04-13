@@ -18,8 +18,8 @@ Filament.Cache=class{
 		})
 	}
 	async requestTileset(id){
-		const data = await requestJSON(`tilesets/${id}.json`);
-		const image = await requestImage(data.image,'assets/tilesets');
+		const data = await this.requestJSON(`tilesets/${id}.json`);
+		const image = await this.requestImage(data.image,'assets/tilesets');
 		return new Filament.TileSet(image,data);
 	}
 	async gameAsset(key,path,callback){

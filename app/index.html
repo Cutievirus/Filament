@@ -29,9 +29,10 @@
 			:is="screen.component"
 			></div>
 		</main>
-		<aside id="tiles"
-		v-if="editor"
-		>tiles</aside>
+		<aside id="tileset-panel"
+		v-if="editor&&activeScreen.id<2"
+		:is="panels.tileset"
+		></aside>
 	</section>
 </div>
 <script src="engine/filament.js"></script>
