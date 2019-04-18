@@ -16,5 +16,7 @@ Filament.vue.$data.panels.tileset={
 		this.tileset_url=this.tileset.image.baseTexture.imageUrl;
 		this.tileset_width=this.tileset.image.baseTexture.width;
 		this.tileset_height=this.tileset.image.baseTexture.height;
+		Filament.resize();
+		Filament.resize();
 	}
 }

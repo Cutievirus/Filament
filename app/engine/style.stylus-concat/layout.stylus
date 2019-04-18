@@ -21,6 +21,8 @@ body
 	height: 100%
 	overflow-x: hidden
 	overflow-y: auto
+	&:focus
+		outline-style: none
 #screen-game
 	overflow: hidden
 	canvas
