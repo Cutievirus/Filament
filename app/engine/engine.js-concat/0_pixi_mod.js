@@ -39,3 +39,10 @@ PIXI.Texture.prototype.crop=function(x,y,w,h){
 PIXI.Sprite.prototype.crop=function(){
 	this.texture = this.texture.crop(...arguments);
 }
+
+Filament.BLEND_MODES={};
+Filament.addBlendMode=function(name,value){
+	const blendModes=Filament.pixi.renderer.state.blendModes;
+	Filament.BLEND_MODES[name]=blendModes.length;
+	blendModes.push(value);
+}

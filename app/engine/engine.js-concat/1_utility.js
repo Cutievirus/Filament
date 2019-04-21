@@ -26,9 +26,9 @@ Filament.floorFactor=(value,factor)=>Filament.roundFactor(value,factor,'floor');
 Filament.ceilFactor=(value,factor)=>Filament.roundFactor(value,factor,'ceil');
 
 Filament.arrayAdd=(array,obj,index=array.length)=>{
-	if(array.indexOf(obj)>=0){ return true; }
+	if(array.indexOf(obj)>=0){ return false; }
 	array.splice(index,0,obj);
-	return false;
+	return true;
 }
 
 Filament.arrayRemove=(array,obj)=>{
@@ -155,11 +155,13 @@ Filament.CoordMap = class{
 			return this.data[x];
 		}
 		if(typeof this.dfault==='function'){
+			let value;
 			if(Filament.isConstructor(this.dfault)){
-				return new this.dfault(...this.defaultArgs);
+				value = new this.dfault(...this.defaultArgs);
 			}else{
-				return this.dfault(...this.defaultArgs);
+				value = this.dfault(...this.defaultArgs);
 			}
+			return this.data[x]=value;
 		}else{
 			return this.dfault;
 		}

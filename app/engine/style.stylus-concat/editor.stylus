@@ -23,6 +23,14 @@ button
 
 
 #tileset-panel
-	background-color:black
-	img
+	background-color: black
+	background-image: url("img/tileset-panel-bg.png")
+	#tileset
 		width: calc(var(--width)*var(--scale)*1px)
+		display: block
+	select
+		width: 100%
+		display: block
+		border-style: none 
+		border-top: 1px solid silver
+		

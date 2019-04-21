@@ -5,7 +5,7 @@ Filament.pixi = new PIXI.Application({
 	view: Filament.pixiCanvas,
 	width: Filament.settings.width,
 	height: Filament.settings.height,
-	backgroundColor:0x000088
+	backgroundColor:0x000088,
 });
 
 Filament.start=async function(){
@@ -22,9 +22,21 @@ Filament.start=async function(){
 	Filament.ui_container.style.width = Filament.settings.width*Filament.settings.uiRes+"px";
 	Filament.ui_container.style.height = Filament.settings.height*Filament.settings.uiRes+"px";
 
-	window.addEventListener('resize',Filament.resize);
+	window.addEventListener('resize',Filament.electron?async()=>{
+		Filament.resize();
+		if(!Filament.resizing){
+			Filament.resizing=true;
+			for(let i=0;i<10;++i){
+				Filament.resize();
+				await Filament.sleep(0);
+			}
+			Filament.resizing=false;
+		}
+	}:Filament.resize);
 	Filament.resize();
 	Filament.ticker = Filament.pixi.ticker.add(Filament.update,Filament);
+
+	Filament.events.fireEvent('start');
 
 	for (const scene of Object.values(Filament.scenes)){
 		scene.start();
@@ -93,4 +105,6 @@ Filament.resize=()=>{
 		Filament.parent.offsetWidth/2 - Filament.ui_container.offsetWidth/2);
 	Filament.ui_container.style.setProperty('--top',
 		Filament.parent.offsetHeight/2 - Filament.ui_container.offsetHeight/2);
+
+	Filament.events.fireEvent('resize');
 };
