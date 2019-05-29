@@ -17,10 +17,29 @@ Filament.Cache=class{
 			return resource.data;
 		})
 	}
+	async requestCompressedJSON(key,path='data'){
+		return await Filament.loadFile(Filament.path(path,key));
+	}
 	async requestTileset(id){
-		const data = await this.requestJSON(`tilesets/${id}.json`);
-		const image = await this.requestImage(data.image,'assets/tilesets');
-		return new Filament.TileSet(image,data);
+		if (`tileset${id}` in this._cache){
+			return this._cache[`tileset${id}`];
+		}
+		var data,image;
+		try{
+			data = await this.requestJSON(`tilesets/${id}.json`);
+		}catch(err){
+			data = await this.requestJSON("tilesets/default.json");
+			Filament.log.error(`Failed to load tileset data ${id}.`);
+		}
+		try{
+			image = await this.requestImage(data.image,'assets/tilesets');
+		}catch(err){
+			image = await this.requestImage("default.png",'assets/tilesets');
+			Filament.log.error(`Failed to load tileset image ${data.image}.`);
+		}
+		const tileset = new Filament.TileSet(image,data);
+		this._cache[`tileset${id}`]=tileset;
+		return tileset;
 	}
 	async gameAsset(key,path,callback){
 		path=Filament.path(path,key);

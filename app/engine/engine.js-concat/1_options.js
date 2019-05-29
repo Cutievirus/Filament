@@ -11,13 +11,18 @@ Filament.SCALE_MODE = new Filament.Enum(
 );
 
 Filament.settings = {
+	slug: 'filament',
 	width: 320,
 	height: 240,
 	tileSize: 16,
 	cellSize: 24,
 	scaleMode: Filament.SCALE_MODE.HYBRID,
-	maintainAspectRatio: true,
-	uiRes:1,
+	_maintainAspectRatio: 1,
+	get maintainAspectRatio(){ return this._maintainAspectRatio<1?Infinity:this._maintainAspectRatio; },
+	set maintainAspectRatio(value){ this._maintainAspectRatio=value<1?Infinity:value; },
+	_uiRes:0,
+	get uiRes(){ return this._uiRes>0?this._uiRes:Filament.scale; },
+	set uiRes(value){ this._uiRes=value; },
 	language:'en',
 };
 
@@ -28,6 +33,7 @@ Filament.configure=options=>{
 Filament.loadSettings=async function(){
 	const settings = await (await fetch(Filament.gameFile('settings.json'))).json();
 	Filament.configure(settings);
+	Filament.determineScale();
 
 	const body = document.body.style;
 	body.setProperty('--uiRes',Filament.settings.uiRes);

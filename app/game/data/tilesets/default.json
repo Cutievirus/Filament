@@ -1,0 +1,8 @@
+{
+  "name":"new tileset",
+  "image":"default.png",
+  "tileSize":16,
+  "autotile":false,
+  "animation":0,
+  "data":[[]]
+}

@@ -1,5 +1,6 @@
 html, body, #wrapper
-	height: 100%
+	height: 100vh
+	overflow:hidden
 body
 	margin: 0
 	user-select: none
@@ -53,9 +54,11 @@ img
 	pointer-events: none
 
 	transform: scale(var(--scale))
-	-webkit-transform: perspective(999px) translateZ(1px) scale(var(--scale))
+	*-webkit-transform: perspective(999px) translateZ(1px) scale(var(--scale))
 	top: calc(var(--top)*1px)
 	left: calc(var(--left)*1px)
+	width: calc(var(--width)*1px)
+	height: calc(var(--height)*1px)
 
 	.window
 		position: absolute

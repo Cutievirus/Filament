@@ -65,14 +65,15 @@ Filament.Window = class extends Filament.UI{
 	get hasFrame(){return this._hasFrame||this.movable||this.resizable||this.closable;}
 	set hasFrame(v){this._hasFrame=v;}
 	getBoundsUI(){
-		let bounds = {};
+		const gpos = this.toGlobal(Filament.origin);
+		const bounds = {};
 		bounds.width = Filament.round(this.width,2);
 		bounds.height = Filament.round(this.height,2);
-		bounds.left=Filament.round(this.worldTransform.tx-this.anchor.x*bounds.width,2);
-		bounds.top=Filament.round(this.worldTransform.ty-this.anchor.y*bounds.height,2);
+		bounds.left=Filament.round(gpos.x-this.anchor.x*bounds.width,2);
+		bounds.top=Filament.round(gpos.y-this.anchor.y*bounds.height,2);
 		if(this.edgeSnap){
-			bounds.left=Filament.minmax(0,Filament.settings.width-bounds.width,bounds.left);
-			bounds.top=Filament.minmax(0,Filament.settings.height-bounds.height,bounds.top);
+			bounds.left=Filament.minmax(0,Filament.pixiCanvas.width-bounds.width,bounds.left);
+			bounds.top=Filament.minmax(0,Filament.pixiCanvas.height-bounds.height,bounds.top);
 		}
 		return bounds;
 	}
@@ -89,7 +90,7 @@ Filament.Window = class extends Filament.UI{
 			"--height"	:	bounds.height,
 			"--x"		:	bounds.left,
 			"--y"		:	bounds.top,
-			"--z"		:	this.zIndex+windex/1000,
+			"--z"		:	this.zIndex*1000+windex,
 			"--alpha"	:	this.worldAlpha,
 		});
 		this.setAttributes({
@@ -106,8 +107,9 @@ Filament.Window = class extends Filament.UI{
 	}
 	finishDrag(event){
 		if(this.edgeSnap){
-			this.x=Filament.minmax(0,Filament.settings.width-this.width,this.x);
-			this.y=Filament.minmax(0,Filament.settings.height-this.height,this.y);
+			const origin = this.parent.toLocal(Filament.origin);
+			this.x=Filament.minmax(origin.x+this.width*this.anchor.x,origin.x+Filament.pixiCanvas.width-this.width*(1-this.anchor.x),this.x);
+			this.y=Filament.minmax(origin.y+this.height*this.anchor.y,origin.y+Filament.pixiCanvas.height-this.height*(1-this.anchor.y),this.y);
 		}
 	}
 	updateResize(event){

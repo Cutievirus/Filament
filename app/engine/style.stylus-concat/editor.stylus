@@ -21,6 +21,10 @@ button
 			background: #007dff
 			color: white
 
+header
+	height: 2em
+aside
+	height: calc(100vh - 2em)
 
 #tileset-panel
 	background-color: black
@@ -33,4 +37,68 @@ button
 		display: block
 		border-style: none 
 		border-top: 1px solid silver
-		
+	#selectedTile
+		border-width: "calc(%s*var(--scale))"%edpx(2)
+		shadow-width="calc(%s*var(--scale))"%edpx(0.5)
+		border: @border-width solid white;
+		box-shadow: 0 0 0 shadow-width black, inset 0 0 0 shadow-width black;
+		ts=calc(var(--tileSize)*var(--scale)*1px)
+		width: "calc(var(--w)*%s)" % ts
+		height: "calc(var(--h)*%s)" % ts
+		margin-right: "calc(var(--w)*%s*-1 - %s*2)" % (ts @border-width)
+		margin-bottom: "calc(var(--h)*%s*-1 - %s*2)" % (ts @border-width)
+		position: relative
+		left: "calc(var(--x)*%s - %s)" % (ts @border-width)
+		top: "calc(var(--y)*%s - %s)" % (ts @border-width)
+		border-radius: @border-width
+		pointer-events: none
+	#tileset-container
+		overflow-x: hidden
+		overflow-y: auto
+		height: calc( 100vh - var(--tileset-y)*1px)
+.editor-button-set
+	display:flex
+	flex-wrap:wrap
+	button
+		flex-grow:1
+		position:relative
+
+		&[data-leftTool]::before, &[data-rightTool]::after
+			content:""
+			width:edpx(16)
+			height:@width
+			display:block
+			position:absolute
+			bottom: 0
+		&[data-rightTool]::after
+			background-image: url("img/indicator-R.png")
+			left: 50%
+		&[data-leftTool]::before
+			background-image: url("img/indicator-L.png")
+			right: 50%
+		img 
+			width:edpx(32)
+			height:@width
+			pointer-events: none
+
+#ui-container
+	.mapCell-grid
+		outline: 1px dashed black;
+	.tileSelection
+		border-width:uipx(1)
+		border: @border-width dashed white;
+		margin-left: - @border-width
+		margin-top: @margin-left
+	.tileSelector
+		border-width:uipx(2)
+		border: @border-width solid white;
+		box-shadow: 0 0 0 uipx(0.5) black, inset 0 0 0 uipx(0.5) black;
+		margin-left: - @border-width
+		margin-top: @margin-left
+		animation: 0.25s linear alternate infinite tileSelector-pulse
+		border-radius: uipx(2)
+	@keyframes tileSelector-pulse
+		from
+			transform: scale(1)
+		to
+			transform: scale(1.05)

@@ -4,5 +4,7 @@
     "initialScale":3,
     "tileSize": 16,
     "cellSize": 24,
-    "uiRes":2
+    "uiRes":0,
+    "maintainAspectRatio":1.5,
+    "scaleMode":"NEAREST"
 }

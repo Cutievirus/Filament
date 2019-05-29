@@ -3,8 +3,8 @@ Filament.UI = class extends PIXI.Container{
 		super();
 		this.ui = document.createElement('div');
 		this.anchor = new PIXI.ObservablePoint(this._onAnchorUpdate, this);
-		this.setAccessor('id');
-		this.setAccessor('className');
+		this.uiAccessor('id');
+		this.uiAccessor('className');
 		this.classList=this.ui.classList;
 		this.style=this.ui.style;
 		this.style.position="absolute";
@@ -17,7 +17,7 @@ Filament.UI = class extends PIXI.Container{
 		(parent instanceof Filament.UI ? parent.ui : parent).append(this.ui);
 		return this;
 	}
-	setAccessor(v1,v2=v1){
+	uiAccessor(v1,v2=v1){
 		Object.defineProperty(this,v1,{
 			get(){return this.ui[v2];},
 			set(v){this.ui[v2]=v;}

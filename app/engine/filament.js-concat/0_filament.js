@@ -55,4 +55,6 @@ try{
 		window:remote.getCurrentWindow(),
 		dialog:remote.dialog
 	}
-}catch(err){}
+}catch(err){ /* continue without electron */ }
+
+Filament.editor={enabled:Boolean(Filament.electron)};

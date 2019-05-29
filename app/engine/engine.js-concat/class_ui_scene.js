@@ -25,6 +25,7 @@ Object.defineProperty(Filament,"scene",{
 				scene.leave();
 			}
 		}
+		Filament.alignScene();
 	}
 })
 

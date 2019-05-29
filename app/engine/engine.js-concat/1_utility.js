@@ -40,6 +40,18 @@ Filament.arrayRemove=(array,obj)=>{
 	return false;
 }
 
+Filament.arrayShuffle=a=>{
+	for (let i=a.length-1; i>0; --i){
+		const j = Math.floor(Math.random()*(i+1));
+		const t=a[i];
+		a[i] = a[j];
+		a[j] = t;
+	}
+	return a;
+}
+
+Filament.modulo=(n,m)=>(n%m+m)%m;
+
 /**
  * Like Object.assign, except doesn't overwrite fields
  * that already exist.
@@ -143,8 +155,13 @@ Filament.CoordMap = class{
 		this.dfault=dfault;
 		this.defaultArgs=defaultArgs;
 		this.data={};
+		this.root=this;
 	}
 	get(x,...yz){
+		this.coords=[x,...yz];
+		return this._get(x,...yz);
+	}
+	_get(x,...yz){
 		if(this.dimensions<=1){
 			return this._getValue(x);
 		}
@@ -157,9 +174,9 @@ Filament.CoordMap = class{
 		if(typeof this.dfault==='function'){
 			let value;
 			if(Filament.isConstructor(this.dfault)){
-				value = new this.dfault(...this.defaultArgs);
+				value = new this.dfault(...this.defaultArgs,...this.root.coords);
 			}else{
-				value = this.dfault(...this.defaultArgs);
+				value = this.dfault(...this.defaultArgs,...this.root.coords);
 			}
 			return this.data[x]=value;
 		}else{
@@ -169,6 +186,7 @@ Filament.CoordMap = class{
 	_getSubDimension(x){
 		if( !(this.data[x] instanceof Filament.CoordMap) ){
 			this.data[x]=new Filament.CoordMap(this.dimensions-1,this.dfault,...this.defaultArgs);
+			this.data[x].root=this.root;
 		}
 		return this.data[x];
 	}
@@ -198,3 +216,16 @@ Filament.CoordMap = class{
 		return this._getSubDimension(x).has(...yz);
 	}
 }
+
+
+Filament.log=(message)=>{
+	console.log(message);
+};
+Object.assign(Filament.log,{
+	error(message){
+		console.error(message);
+	},
+	warn(message){
+		console.warn(message);
+	}
+});

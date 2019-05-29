@@ -1,10 +1,10 @@
 Filament.mouse={
 	eventHandler(eventname,event){
 		const canvasBounds = Filament.pixiCanvas.getBoundingClientRect();
-		event.canvasX=(event.clientX-canvasBounds.x)/Filament.scaleX;
-		event.canvasY=(event.clientY-canvasBounds.y)/Filament.scaleY;
-		event.worldX=event.canvasX;
-		event.worldY=event.canvasY;
+		event.canvasX=(event.clientX-canvasBounds.x)/Filament.scale;
+		event.canvasY=(event.clientY-canvasBounds.y)/Filament.scale;
+		event.worldX=event.canvasX-Filament.scene.position.x;
+		event.worldY=event.canvasY-Filament.scene.position.y;
 		this.fireEvent(eventname,event);
 	},
 }
