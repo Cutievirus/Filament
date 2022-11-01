@@ -10,7 +10,7 @@
   "main": "app/main.js",
   "devDependencies": {
     "browser-sync": "^2.26.3",
-    "gulp": "^3.9.1",
+    "gulp": "^4.0.2",
     "gulp-concat": "^2.6.1",
     "gulp-sourcemaps": "^2.6.4",
     "gulp-stylus": "^2.7.0",
